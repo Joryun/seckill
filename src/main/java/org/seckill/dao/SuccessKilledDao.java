@@ -14,7 +14,7 @@ public interface SuccessKilledDao {
      * @param userPhone
      * @return 插入行数
      */
-    int insertSuccessKilled(long seckillId, long userPhone );
+    int insertSuccessKilled(long seckillId, long userPhone);
 
     /**
      * 根据id查询SuccessKilled并携带秒杀商品对象实体
