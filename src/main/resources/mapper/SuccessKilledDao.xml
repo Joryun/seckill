@@ -4,10 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.seckill.dao.SuccessKilledDao">
 
-    <!-- 主键冲突，报错 -->
+    <!-- ignore防止主键冲突，报错，而是让二次插入相同数据返回insertCount=0 -->
     <insert id="insertSuccessKilled">
-        INSERT ignore INTO success_killed(seckill_id,user_phone)
-        VALUES (#{seckillId}, #{userPhone})
+        INSERT ignore INTO success_killed(seckill_id,user_phone,state)
+        VALUES (#{seckillId}, #{userPhone}, 0)
     </insert>
 
     <select id="queryByIdWithSeckill" resultType="SuccessKilled">
@@ -27,7 +27,7 @@
           s.create_time "seckill.create_time"
         FROM success_killed sk
         INNER JOIN seckill s on sk.seckill_id = s.seckill_id
-        WHERE sk.seckill_id = #{seckillId}
+        WHERE sk.seckill_id = #{seckillId} AND sk.user_phone = #{userPhone}
     </select>
 
 </mapper>
