@@ -37,9 +37,18 @@ public class Exposer {
         this.end = end;
     }
 
+
     public Exposer(boolean exposed, long seckillId) {
         this.exposed = exposed;
         this.seckillId = seckillId;
+    }
+
+    public Exposer(boolean exposed, long seckillId, long now, long start, long end) {
+        this.exposed = exposed;
+        this.seckillId = seckillId;
+        this.now = now;
+        this.start = start;
+        this.end = end;
     }
 
     public boolean isExposed() {
