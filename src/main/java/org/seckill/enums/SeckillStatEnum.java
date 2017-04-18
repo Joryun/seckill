@@ -3,9 +3,10 @@ package org.seckill.enums;
 /**
  * Created by joryun on 2017/4/17.
  *
- * 使用枚举表述常量数据字段
+ * 数据字典：使用枚举表述常量数据字段
  */
 public enum  SeckillStatEnum {
+
     SUCCESS(1, "秒杀成功"),
     END(0, "秒杀结束"),
     REPEAT_KILL(-1, "重复秒杀"),
