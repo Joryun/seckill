@@ -35,4 +35,5 @@ public interface SeckillDao {
     //注意：@Param表示给参数命名，若是不加，按照java没有保存形参的习性，传值至junit测试会报错
     //原因：对应的xml文件中sql语句要接受两个参数，若要正确传参，则需要给参数命名
     List<Seckill> queryAll(@Param("offset") int offset, @Param("limit") int limit);
+
 }
