@@ -32,10 +32,10 @@ public class SeckillController {
     @Autowired
     private SeckillService seckillService;
 
+    //获取列表页
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model) {
 
-        //获取列表页
         List<Seckill> list = seckillService.getSeckillList();
         model.addAttribute("list", list);
 
@@ -43,6 +43,7 @@ public class SeckillController {
         return "list";
     }
 
+    //秒杀详情页
     @RequestMapping(value = "/{seckillId}/detail", method = RequestMethod.GET)
     public String detail(@PathVariable("seckillId") Long seckillId, Model model) {
 
