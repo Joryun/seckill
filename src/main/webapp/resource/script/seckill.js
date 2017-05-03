@@ -99,13 +99,24 @@ var seckill = {
                 //时间格式
                 var format = event.strftime('秒杀倒计时: %D天 %H时 %M分 %S秒 ');
                 seckillBox.html(format);
+            }).on('finish.countdown', function () {
+
+                //时间完成后回调事件
+                //获取秒杀地址,控制现实逻辑,执行秒杀
+                console.log('______fininsh.countdown');
+                seckill.handlerSeckill(seckillId, seckillBox);
+
             });
 
         } else {
             //秒杀开始
-
-
+            seckill.handlerSeckill(seckillId, seckillBox);
         }
+
+    },
+
+    handlerSeckill: function (seckillId, node) {
+        //处理秒杀逻辑
 
     }
 
