@@ -37,6 +37,7 @@ public class SeckillExecution {
     public SeckillExecution(Long seckillId, SeckillStatEnum statEnum) {
         this.seckillId = seckillId;
         this.state = statEnum.getState();
+        this.stateInfo = statEnum.getStateInfo();
     }
 
     public long getSeckillId() {
