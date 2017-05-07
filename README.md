@@ -15,9 +15,6 @@
 
 1.秒杀系统业务流程
 
-商家 ——（添加、调整）——> 库存 ——（秒杀、预售）——> 用户  
-商家 <——（发货、核账）—— 库存 <——（付款、退货）—— 用户
-
 ![](https://github.com/Joryun/MarkdownPhotos/blob/master/seckillPhotos/seckill-operation.png)
 
 2.秒杀业务的核心：库存的处理
