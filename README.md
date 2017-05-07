@@ -1,4 +1,4 @@
-# seckill —— 高并发秒杀系统
+# 高并发秒杀系统
 开发环境：IDEA，Tomcat，MySQL，Redis
 
 项目构建：Maven
@@ -71,8 +71,10 @@
 <font color=gray size=4>（一）DAO设计编码</font>
 
 Package:
-（1）org.seckill.dao
-（2）org.seckill.entity
+
+（1）org.seckill.dao
+
+（2）org.seckill.entity
 
 #### 1. 接口设计与SQL编写
 
@@ -81,34 +83,47 @@ Package:
 #### 2. 数据库设计与编码
 
 两张表：
-（1）	seckill	//秒杀库存表
-（2）	success_killed		//秒杀成功明细表
+
+（1）	seckill	//秒杀库存表
+
+（2）	success_killed		//秒杀成功明细表
+
 
 #### 3. DAO实体和接口编码
 
 （1）	SeckillDao	
-（2）	SuccesskilledDao		
+
+（2）	SuccesskilledDao		
 
 #### 4. Mybatis整合Spring
 
 （1）	编写mybatis-config.xml（全局配置）
-（2）	编写spring-dao.xml（配置dataSource，sqlSessionFactory等）
+
+（2）	编写spring-dao.xml（配置dataSource，sqlSessionFactory等）
 
 #### 5. 完成Dao层集成测试（使用Junit4）
 
-<font color=gray size=4>（二）Service设计编码</font>
+
+<font color=gray size=4>（二）Service设计编码
+</font>
 
 
 Package:
-（1）org.seckill.service 存放服务，即为一系列逻辑
-（2）org. seckill.exception	存放service接口所需要的异常，如重复秒杀，秒杀与关闭等
-（3）org. seckill.dto 数据传输层，与entity类似，存放一些表示数据的类型，web与service间的数据传递
-（4）org. seckill.enums 封装枚举类，表述常量字段-状态值（“秒杀成功”，“秒杀结束”等等）
+
+（1）org.seckill.service 存放服务，即为一系列逻辑
+
+（2）org. seckill.exception	存放service接口所需要的异常，如重复秒杀，秒杀与关闭等
+
+（3）org. seckill.dto 数据传输层，与entity类似，存放一些表示数据的类型，web与service间的数据传递
+
+（4）org. seckill.enums 封装枚举类，表述常量字段-状态值（“秒杀成功”，“秒杀结束”等等）
 
 #### 1. 接口设计与实现
 
 （1）业务接口：站在“使用者”角度设计接口
-（2）三个方面：方法定义粒度，参数，返回类型（return 类型/异常）
+
+（2）三个方面：方法定义粒度，参数，返回类型（return 类型/异常）
+
 
 #### 2. 使用Spring托管Service依赖（Spring IOC）
 
@@ -118,41 +133,61 @@ Package:
 
 ![](https://github.com/Joryun/MarkdownPhotos/blob/master/seckillPhotos/service-2(2).png)
 
-(2) 编写spring-service.xml(3) 扩展
+(2) 编写spring-service.xml
+
+(3) 扩展
 
 * Spring IOC
-（1）	为对象创建统一托管
-（2）	规范的生命周期管理
-（3）	灵活的依赖注入
-（4）	一致的获取对象
+
+（1）	为对象创建统一托管
+
+（2）	规范的生命周期管理
+
+（3）	灵活的依赖注入
+
+（4）	一致的获取对象
 
 * Spring IOC注入方式及场景
-（1）	XML：
+
+（1）	XML：
 
 一.Bean实现类来自第三方类库，如DataSource等；
-二.需要命名空间配置，如context，aop，mvc等
-（2）	注解：项目中自身开发使用的类，可直接在代码中使用注解，如：@Service，@Controller
-（3）	Java配置类：需要通过代码控制对象创建逻辑的场景，如：自定义修改依赖类库
+
+二.需要命名空间配置，如context，aop，mvc等
+
+（2）	注解：项目中自身开发使用的类，可直接在代码中使用注解，如：@Service，@Controller
+
+（3）	Java配置类：需要通过代码控制对象创建逻辑的场景，如：自定义修改依赖类库
+
 
 #### 3. 配置并使用Spring声明式事务
 
 ProxyFactoryBean + XML   ——>   早期使用方式（2.0）
-tx:advice + aop           ——>   一次配置永久生效
-注解@Transactional       ——>   注解控制（推荐）
+
+tx:advice + aop           ——>   一次配置永久生效
+
+注解@Transactional       ——>   注解控制（推荐）
 
 * 什么时候回滚事务？
-抛出的是运行期异常（RuntimeException）避免使用不当的try...catch...
+
+抛出的是运行期异常（RuntimeException）
+避免使用不当的try...catch...
 
 * 使用注解控制事务方法的优点
-(1) 开发团队达成一致约定，明确标注事务方法的编程风格
-(2) 保证事务方法的执行时间尽可能短，不要穿插其它网络操作，RPC/HTTP请求或者剥离到事务方法外部
-(3) 不是所有的方法都需要事务，如只有一条修改操作，只读操作不需要事务控制	
+
+(1) 开发团队达成一致约定，明确标注事务方法的编程风格
+
+(2) 保证事务方法的执行时间尽可能短，不要穿插其它网络操作，RPC/HTTP请求或者剥离到事务方法外部
+
+(3) 不是所有的方法都需要事务，如只有一条修改操作，只读操作不需要事务控制
+	
 
 #### 4. 完成Service集成测试（使用Junit4）
 
 
 
-<font color=gray size=4>（三）Web设计编码</font>
+<font color=gray size=4>（三）Web设计编码
+</font>
 
 #### 1. 前端交互逻辑
 
@@ -169,25 +204,33 @@ ProxyFactoryBean + XML   ——>   早期使用方式（2.0）
 
 秒杀API的URL设计
 
-* GET	/seckill/list	（秒杀列表）* GET	/seckill/{id}/detail	（详情页）* GET	/seckill/time/now	（系统时间）* POST	  /seckill/{id}/exposer	（暴露秒杀）* POST  /seckill/{id}/{md5}/execution	（执行秒杀）
+* GET	/seckill/list	（秒杀列表）
+* GET	/seckill/{id}/detail	（详情页）
+* GET	/seckill/time/now	（系统时间）
+* POST	  /seckill/{id}/exposer	（暴露秒杀）
+* POST  /seckill/{id}/{md5}/execution	（执行秒杀）
 
 #### 3. 整合SpringMVC框架及相关配置
 
 （1）编写web.xml
-（2）添加spring-web.xml
+
+（2）添加spring-web.xml
 
 #### 4. 实现秒杀相关的Restful接口
 
 （1）编写SeckillController
-（2）创建一个DTO类SeckillResult，封装所有ajax请求返回类型（json）
+
+（2）创建一个DTO类SeckillResult，封装所有ajax请求返回类型（json）
 
 
 #### 5. 基于Bootstrap框架开发页面
 
-(1) 抽取公共部分，开发common包下的内容
+(1) 抽取公共部分，开发common包下的内容
+
 ![](https://github.com/Joryun/MarkdownPhotos/blob/master/seckillPhotos/web-5(1).png)
 
-* head.jsp  ->  bootstrap中包含于head标签之内的内容，一般为css，编码设置及主题文件* tag.jsp   ->  引入库文件，例如jstl库中的fmt等
+* head.jsp  ->  bootstrap中包含于head标签之内的内容，一般为css，编码设置及主题文件
+* tag.jsp   ->  引入库文件，例如jstl库中的fmt等
 
 (2) 开发商品列表页list.jsp
 
@@ -196,7 +239,9 @@ ProxyFactoryBean + XML   ——>   早期使用方式（2.0）
 #### 6. Cookie登录交互
 
 （1）编写js代码（基于模块化的js代码），完成登录验证（重点：验证手机号）
-（2）完成弹出层组件的逻辑设计
+
+（2）完成弹出层组件的逻辑设计
+
 
 #### 7. 计时交互
 
@@ -207,12 +252,15 @@ ProxyFactoryBean + XML   ——>   早期使用方式（2.0）
 #### 8. 秒杀交互
 
 （1）绑定按钮点击事件（one click），预防用户连续点击
-（2）考虑浏览器计时偏差
-（3）显示秒杀的结果
+
+（2）考虑浏览器计时偏差
+
+（3）显示秒杀的结果
 
 
 
-<font color=gray size=4>（四）高并发优化与分析</font>
+<font color=gray size=4>（四）高并发优化与分析
+</font>
 
 ###待续。。。
 
