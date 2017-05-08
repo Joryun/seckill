@@ -31,7 +31,7 @@ import java.util.List;
 public class SeckillServiceImpl implements SeckillService {
 
     //日志对象
-    private Logger logger= LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     //加入一个混淆字符串(秒杀接口)的盐值，为避免用户猜出md5值，值任意给，越复杂越好
     private final String slat = "vnosdpowsmb%$^&*$^%&*sakvdSDHBHDNojn!!";
@@ -47,7 +47,6 @@ public class SeckillServiceImpl implements SeckillService {
     private RedisDao redisDao;
 
 
-
     public List<Seckill> getSeckillList() {
 
         return seckillDao.queryAll(0, 4);
@@ -61,14 +60,25 @@ public class SeckillServiceImpl implements SeckillService {
     public Exposer exportSeckillUrl(long seckillId) {
 
         /**
-         * 优化点：缓存优化
+         * 优化点：缓存优化：超时的基础上维护一致性
          */
-        Seckill seckill = seckillDao.queryById(seckillId);
 
-        //查询不到秒杀产品记录
+        //1:访问redis
+        Seckill seckill = redisDao.getSeckill(seckillId);
+
         if (seckill == null) {
-            return new Exposer(false, seckillId);
+            //2:访问数据库
+            seckill = seckillDao.queryById(seckillId);
+
+            //查询不到秒杀产品记录
+            if (seckill == null) {
+                return new Exposer(false, seckillId);
+            } else {
+                //3:放入redis
+                redisDao.putSeckill(seckill);
+            }
         }
+
 
         Date startTime = seckill.getStartTime();
         Date endTime = seckill.getEndTime();

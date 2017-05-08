@@ -29,9 +29,9 @@ public class RedisDaoTest {
 
         //test : get and put
         Seckill seckill = redisDao.getSeckill(id);
-        System.out.println(seckill);
+//        System.out.println(seckill);
 
-        /*if (seckill == null) {
+        if (seckill == null) {
             seckill = seckillDao.queryById(id);
 
             if (seckill != null){
@@ -41,7 +41,7 @@ public class RedisDaoTest {
                 seckill = redisDao.getSeckill(id);
                 System.out.println(seckill);
             }
-        }*/
+        }
     }
 
 
