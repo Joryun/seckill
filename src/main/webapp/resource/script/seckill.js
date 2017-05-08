@@ -121,6 +121,7 @@ var seckill = {
 
     },
 
+    //处理秒杀事件
     handlerSeckill: function (seckillId, node) {
         //处理秒杀逻辑
         //获取秒杀地址,控制显示逻辑,执行秒杀
