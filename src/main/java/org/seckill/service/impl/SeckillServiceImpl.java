@@ -2,6 +2,7 @@ package org.seckill.service.impl;
 
 import org.seckill.dao.SeckillDao;
 import org.seckill.dao.SuccessKilledDao;
+import org.seckill.dao.cache.RedisDao;
 import org.seckill.dto.Exposer;
 import org.seckill.dto.SeckillExecution;
 import org.seckill.entity.Seckill;
@@ -41,6 +42,10 @@ public class SeckillServiceImpl implements SeckillService {
 
     @Autowired //@Resource
     private SuccessKilledDao successKilledDao;
+
+    @Autowired
+    private RedisDao redisDao;
+
 
 
     public List<Seckill> getSeckillList() {
