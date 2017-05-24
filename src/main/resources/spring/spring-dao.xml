@@ -10,22 +10,55 @@
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
     <!-- 数据库连接池 -->
-    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <!-- 配置连接池属性 -->
+    <!--<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        &lt;!&ndash; 配置连接池属性 &ndash;&gt;
         <property name="driverClass" value="${jdbc.driver}"/>
         <property name="jdbcUrl" value="${jdbc.url}"/>
         <property name="user" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
 
-        <!-- c3p0连接池的私有属性 -->
+        &lt;!&ndash; c3p0连接池的私有属性 &ndash;&gt;
         <property name="maxPoolSize" value="30"/>
         <property name="minPoolSize" value="10"/>
-        <!-- 关闭连接后不自动commit -->
+        &lt;!&ndash; 关闭连接后不自动commit &ndash;&gt;
         <property name="autoCommitOnClose" value="false"/>
-        <!-- 获取连接超时时间 -->
+        &lt;!&ndash; 获取连接超时时间 &ndash;&gt;
         <property name="checkoutTimeout" value="1000"/>
-        <!-- 当获取连接失败重试次数 -->
+        &lt;!&ndash; 当获取连接失败重试次数 &ndash;&gt;
         <property name="acquireRetryAttempts" value="2"/>
+
+    </bean>-->
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <!-- 配置连接池属性 -->
+        <!--<property name="driverClass" value="${jdbc.driver}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>-->
+
+        <!-- 基本属性 url、user、password 连接信息可以写着或写配置文件 -->
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+
+        <!-- 配置监控统计拦截的filters 这个表示此数据源是否加入监控 -->
+        <property name="filters" value="stat" />
+
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="maxActive" value="20" />
+        <property name="initialSize" value="1" />
+        <property name="maxWait" value="60000" />
+        <property name="minIdle" value="1" />
+
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <property name="validationQuery" value="SELECT 'x'" />
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+        <property name="poolPreparedStatements" value="true" />
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="50" />
 
     </bean>
 
